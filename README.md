@@ -1,8 +1,6 @@
 # Unix Shell
 
 
-
-
 In this project, I built a simple UNIX shell. I followed all the specifications outlined in the [OSTEP Processes Shell](https://github.com/remzi-arpacidusseau/ostep-projects/tree/master/processes-shell) which include key features listed below:
 ### Key Features
 
