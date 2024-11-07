@@ -3,10 +3,34 @@
 
 
 
-In this project, I built a simple UNIX shell. I followed all the specifications outlined in the [OSTEP Processes Shell](https://github.com/remzi-arpacidusseau/ostep-projects/tree/master/processes-shell). I have also added more commands, such as:
+In this project, I built a simple UNIX shell. I followed all the specifications outlined in the [OSTEP Processes Shell](https://github.com/remzi-arpacidusseau/ostep-projects/tree/master/processes-shell) which include key features listed below:
+### Key Features
 
-- **cat**: Concatenates and displays file contents.
-- **history**: Displays a list of previously entered commands.  
+- **Interactive & Batch Modes**: 
+  - Interactive: Prompts for user input.
+  - Batch: Reads commands from a file.
+
+- **Command Execution**: 
+  - Creates a child process for each command, executes it, and waits for completion.
+
+- **Built-in Commands**: 
+  - `exit`: Ends the shell session.
+  - `cd`: Changes the current directory.
+  - `cat`: Displays file contents.
+  - `history`: Shows previously entered commands.
+  - `path`: Modifies executable search paths.
+
+- **Redirection**: 
+  - Redirects output to a file, overwriting it.
+
+- **Parallel Execution**: 
+  - Run multiple commands simultaneously using `&`.
+
+- **Error Handling**: 
+  - Displays error messages for invalid syntax or commands.
+  - Exits on severe errors.
+
+
 
 The program have passed all the test cases. 
 
