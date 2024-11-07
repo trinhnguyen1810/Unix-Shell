@@ -100,6 +100,5 @@ int pathSearch(char command_path[], const char *commandName) {
        }
        dirIndex++;
    }
-   // return 0 if found, -1 if not found
    return commandFound; 
    }

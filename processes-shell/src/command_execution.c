@@ -14,7 +14,7 @@ void commandExecution(char *args[], int argCount, FILE *outputStream)
         return;
     }
 
-    // process commands based on users input and call relevant function
+    // process commands based on users input and call relevant commands
     if (strcmp(args[0], "exit") == 0)
     {
         processExit(argCount);
@@ -37,7 +37,7 @@ void commandExecution(char *args[], int argCount, FILE *outputStream)
     }
     else if (args[0][0] == '!')
     {
-        //handle history recall command
+        // handle history recall command to rerun specific command
         if (argCount == 1)
         {
             int historyIndex = atoi(args[0] + 1) - 1;
@@ -112,11 +112,10 @@ void *parseCommandThread(void *arg)
     {
         fclose(output);
     }
-
     return NULL;
 }
 
-/* Runs an external command by forking a new process. */
+/* Allows shell program to run an external command by forking a new process. */
 void runExternalCommand(char *args[], FILE *out)
 {
     char command_path[256];
@@ -126,18 +125,22 @@ void runExternalCommand(char *args[], FILE *out)
         return;
     }
 
+    //create a new process by duplicating parent process
     pid_t pid = fork();
     if (pid == -1)
     {
         displayError(); 
     }
+    // if fork succeed and we are in child process, run the command
     else if (pid == 0)
     {
-        manageChildProcess(command_path, args, out); // child process execution
+        manageChildProcess(command_path, args, out); 
     }
+
+    // if we are in the parents process, parent waits for the child
     else
     {
-        waitpid(pid, NULL, 0); // parent waits for the child
+        waitpid(pid, NULL, 0); 
     }
 }
 
