@@ -17,14 +17,14 @@ You can either download the ZIP file from the repository or clone it using Git.
 If you have Git installed, you can clone the repository by running:
 ```bash
 git clone <repository-url>
-cd OSTEP-master/processes-shell
+cd Unix-Shell/processes-shell
 ```
 
 #### Option 2: Download ZIP
 If you don’t have Git, download the ZIP file from the repository webpage:
 1. Go to the repository on GitHub.
 2. Click on **Code** > **Download ZIP**.
-3. Extract the downloaded ZIP file, navigate into the `OSTEP-master` directory, then enter the `processes-shell` directory.
+3. Extract the downloaded ZIP file, navigate into the `Unix Shell` directory, then enter the `processes-shell` directory.
 
 ### 2. Build the Shell
 Make sure you are in the `processes-shell` directory, then run:
