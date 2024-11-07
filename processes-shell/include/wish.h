@@ -22,14 +22,14 @@
 #define MAX_HISTORY_ENTRIES 1024
 #define ERROR_MESSAGE "An error has occurred\n"
 
-// Global variables declarations
+// global variables declarations
 extern int historyLength;
 extern char *binPaths[1024];
 extern char *commandHistory[MAX_HISTORY_ENTRIES];
 extern char *inputLine;
 extern FILE *inputFile;
 
-// Function declarations
+// function declarations
 void displayError();
 void closeAndFreeResources(bool closeInputFile, bool releaseInputLine);
 

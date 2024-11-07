@@ -14,7 +14,7 @@ void redirection(FILE *out)
     if (outputFd != STDOUT_FILENO)
     {
         // redirects both stdout and stderr to the file
-        if (dup2(outputFd, STDOUT_FILENO) == -1 || dup2(outputFd, STDERR_FILENO) == -1)
+        if (dup2(outputFd, STDOUT_FILENO) == -1 && dup2(outputFd, STDERR_FILENO) == -1)
         {
             displayError();
             return;

@@ -6,7 +6,6 @@ void addHistory(const char *cmd) {
     // free the oldest entry if the history is full
     if (historyLength >= MAX_HISTORY_ENTRIES) {
         free(commandHistory[0]);
-        // shift entries to left
         for (int i = 1; i < MAX_HISTORY_ENTRIES; i++) {
             commandHistory[i - 1] = commandHistory[i];
         }

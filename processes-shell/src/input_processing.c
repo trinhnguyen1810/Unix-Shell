@@ -8,22 +8,18 @@ char *removeWhitespace(char *input) {
     if (input == NULL) {
         return NULL;
     }
-
     while (*input && isspace((unsigned char)*input)) {
         input++;
     }
-
     // return the string if its empty after trimming leading spaces
     if (*input == '\0') {
         return input;
     }
-
     //remove the spaces
     char *end = input + strlen(input) - 1;
     while (end > input && isspace((unsigned char)*end)) {
         end--;
     }
-
     // null terminate after the last character that is is not white
     *(end + 1) = '\0';
 
@@ -43,14 +39,13 @@ char **splitArgs(char *commands, int *numberArgs) {
     // Split the command string into arguments using space/tab as delimiters
     while ((args[*numberArgs] = strsep(&commands, " \t")) != NULL) {
         if (args[*numberArgs][0] != '\0') {  
-            (*numberArgs)++;  // Increment argument count for valid arguments
+            (*numberArgs)++;  
             if (*numberArgs >= 256) { 
                 displayError();  
                 return NULL;
             }
         }
     }
-
     return args;  // Return the array of arguments
 }
 
@@ -86,7 +81,6 @@ void processInputLine(ssize_t bytesRead) {
             commandCount++;
         }
     }
-
     //create threads to execute commands concurrently
     for (size_t i = 0; i < commandCount; i++) {
         if (pthread_create(&commands[i].threadIdentifier, NULL, parseCommandThread, &commands[i]) != 0) {
@@ -94,13 +88,11 @@ void processInputLine(ssize_t bytesRead) {
             break;
         }
     }
-
     // wait for threads to finish and free the allocated memory
     for (size_t i = 0; i < commandCount; i++) {
         pthread_join(commands[i].threadIdentifier, NULL);
         free(commands[i].cmds);  // Free the duplicated command segment
     }
-
     //free the array of command structures
     free(commands);
 }

@@ -2,49 +2,6 @@
 #include "system_commands.h"
 #include "input_processing.h"
 
-/* Search executable command file in list of directories */
-int pathSearch(char command_path[], const char *initialArg)
-{
-    DIR *dir; // directory pointer hold opened directory
-    struct dirent *entry;
-    int found = -1; // flag to track if the command is found
-    char fullPath[MAX_PATH_LENGTH]; 
-    int pathIndex = 0; // index to iterate through each patn
-
-    // iterate over each directory in binpaths until a match is found
-    while (binPaths[pathIndex] != NULL)
-    {
-        if ((dir = opendir(binPaths[pathIndex])) == NULL)
-        {
-            pathIndex++;
-            continue;
-        }
-
-        // read each entry within the opened director and check for appropriate path
-        while ((entry = readdir(dir)) != NULL)
-        {
-            int length = snprintf(fullPath, MAX_PATH_LENGTH, "%s/%s", binPaths[pathIndex], entry->d_name);
-            if (length > 0 && length < MAX_PATH_LENGTH)
-            {
-                if (strcmp(entry->d_name, initialArg) == 0 && access(fullPath, X_OK) == 0)
-                {
-                    strncpy(command_path, fullPath, MAX_PATH_LENGTH);
-                    found = 0;
-                    break;
-                }
-            }
-        }
-        closedir(dir);
-        
-        if (found == 0)
-        {
-            break;
-        }
-        pathIndex++;
-    }
-    // return result 0 is found, -1 is not found
-    return found;
-}
 
 /* Handles the exit process, freeing resources if needed */
 void processExit(int argCount)
@@ -72,9 +29,9 @@ void processPathCommand(char *args[], int argCount)
 {
     for (int i = 0; i < argCount - 1; ++i)
     {
-        binPaths[i] = strdup(args[i + 1]); // store each directory path in binPaths
+        binPaths[i] = strdup(args[i + 1]); 
     }
-    binPaths[argCount - 1] = NULL; // ensure bin_paths ends with NULL
+    binPaths[argCount - 1] = NULL; 
 }
 
 /* Processes cat command by reading and printing file contents */
@@ -98,6 +55,7 @@ void processCatCommand(char *files[], int fileCount)
                 break;
             }
         }
+        //fputs("\n", stdout);
 
         if (ferror(file))
         {
@@ -107,3 +65,41 @@ void processCatCommand(char *files[], int fileCount)
         fclose(file);
     }
 }
+
+/* Search executable command file in list of directories */
+int pathSearch(char command_path[], const char *commandName) {
+   struct dirent *entry;
+   DIR *directory;
+   char currentPath[MAX_PATH_LENGTH];
+   int commandFound = -1; // Indicates if the command is found
+   int dirIndex = 0;     
+
+
+   // Iterate through each path in binPaths until the command is found
+   while (binPaths[dirIndex] != NULL) {
+       directory = opendir(binPaths[dirIndex]);
+
+
+       if (directory == NULL) {
+           dirIndex++;
+           continue;
+       }
+       // Check each entry in the directory
+       while ((entry = readdir(directory)) != NULL) {
+           snprintf(currentPath, MAX_PATH_LENGTH, "%s/%s", binPaths[dirIndex], entry->d_name);
+           // If entry matches command and is executable, copy path to command_path
+           if (strcmp(entry->d_name, commandName) == 0 && access(currentPath, X_OK) == 0) {
+               strncpy(command_path, currentPath, MAX_PATH_LENGTH);
+               commandFound = 0;
+               break;
+           }
+       }
+       closedir(directory);
+       if (commandFound == 0) {
+           break;
+       }
+       dirIndex++;
+   }
+   // return 0 if found, -1 if not found
+   return commandFound; 
+   }

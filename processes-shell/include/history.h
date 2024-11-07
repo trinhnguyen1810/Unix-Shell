@@ -5,4 +5,4 @@ void addHistory(const char *cmd);
 void displayHistory();
 void clearHistory();
 
-#endif // HISTORY_H
+#endif 
